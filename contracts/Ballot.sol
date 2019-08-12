@@ -9,21 +9,22 @@ contract Ballot {
         bool voted;
   }
 
+    struct Party {
+        uint id;
+        string name;
+    }
+
   constructor() public {
         vote("You have successfully voted");
    }
 
-    event VoterCreated(
-    uint id,
-    string name,
-    bool voted
-  );
 
   mapping(uint => Voter) public voters;
+  mapping(uint => Party) public parties;
 
-  function vote(string memory _name) public {
+  function vote(string memory name) public {
     voteCount ++;
-    voters[voteCount] = Voter(voteCount, _name, false);
-    emit VoterCreated(voteCount, _name, false);
+    parties[voteCount] = Party(voteCount, name);
+    // emit VoterCreated(voteCount, _name, false);
   }
 }

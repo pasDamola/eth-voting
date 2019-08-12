@@ -51,6 +51,7 @@ App = {
   loadAccount: async () => {
     // Set the current blockchain account
     App.votersAccount = web3.eth.accounts[0];
+    console.log(App.votersAccount);
   },
 
   loadContract: async () => {
@@ -64,25 +65,13 @@ App = {
     console.log(App.ballot);
   },
 
-  voteBLP: async () => {
-      let voteCount;
-      const proposal = {
-          name : $("#blp").innerHTML,
-          voteCount : 0
-      }
-      console.log(proposal);
-    //App.setLoading(true)
-    await App.ballot.vote(['blp'], 2);
+  vote: async () => {
+    const candidate = $("#candidate").val();
+    await App.ballot.vote(candidate);
+    $("#candidate").val() = "";
     window.location.reload();
-    voteCount++
   },
 
-  voteLP: async () => {
-    //App.setLoading(true)
-    // const content = $("#newTask").val();
-    await App.ballot.vote(content);
-    window.location.reload();
-  },
 
   render: async () => {
     // Prevent double render
@@ -104,9 +93,37 @@ App = {
   },
 
   renderVotes: async () => {
-    // Load the total task count from the blockchain
-    const chairperson = await App.ballot.chairperson();
-    console.log(chairperson);
+       // Load the total task count from the blockchain
+       const voteCount = await App.ballot.voteCount();
+       const $taskTemplate = $(".taskTemplate");
+   
+       // Render out each task with a new task template
+       for (var i = 1; i <= voteCount; i++) {
+         // Fetch the task data from the blockchain
+         const party = await App.ballot.parties(i);
+         const partyId = party[0].toNumber();
+         const taskContent = party[1];
+         const taskCompleted = party[2];
+   
+         // Create the html for the task
+         const $newTaskTemplate = $taskTemplate.clone();
+         $newTaskTemplate.find(".content").html(taskContent);
+         $newTaskTemplate
+           .find("input")
+           .prop("name", partyId)
+           .prop("checked", taskCompleted);
+         // .on('click', App.toggleCompleted)
+   
+         // Put the task in the correct list
+         if (taskCompleted) {
+           $("#completedTaskList").append($newTaskTemplate);
+         } else {
+           $("#taskList").append($newTaskTemplate);
+         }
+   
+         // Show the task
+         $newTaskTemplate.show();
+       }
   },
 
   setLoading: boolean => {
