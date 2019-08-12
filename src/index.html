@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Dapp University | Todo List</title>
+    <title>Voting PlatForm</title>
 
     <!-- Bootstrap -->
     <link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -47,7 +47,7 @@
         class="navbar-brand col-sm-3 col-md-2 mr-0"
         href="http://www.dappuniversity.com/free-download"
         target="_blank"
-        >Dapp University | Todo List</a
+        >Voting Platform</a
       >
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap d-none d-sm-none d-sm-block">
@@ -64,10 +64,30 @@
             <p class="text-center">Loading...</p>
           </div>
           <div id="content">
-            <!-- <form onSubmit="App.createTask(); return false;">
-              <input id="newTask" type="text" class="form-control" placeholder="Add task..." required>
-              <input type="submit" hidden="">
-            </form> -->
+            <div class="row">
+              <div class="col-md-6">
+                    <span id="blp">Blockchain Laborer's Party(BLP)</span>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onClick="App.voteBLP()"
+                >
+                  Vote
+                </button>
+              </div>
+                 
+              <div class="col-md-6">
+                    Laborer's Party(LP)<br>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  onClick="App.vote()"
+                >
+                  Vote
+                </button>
+              </div>
+            </div>
+
             <ul id="taskList" class="list-unstyled">
               <div class="taskTemplate" class="checkbox" style="display: none">
                 <label>
