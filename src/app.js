@@ -68,7 +68,7 @@ App = {
   vote: async () => {
     const candidate = $("#candidate").val();
     await App.ballot.vote(candidate);
-    $("#candidate").val() = "";
+    console.log(candidate);
     window.location.reload();
   },
 
@@ -95,35 +95,11 @@ App = {
   renderVotes: async () => {
        // Load the total task count from the blockchain
        const voteCount = await App.ballot.voteCount();
-       const $taskTemplate = $(".taskTemplate");
-   
-       // Render out each task with a new task template
        for (var i = 1; i <= voteCount; i++) {
-         // Fetch the task data from the blockchain
-         const party = await App.ballot.parties(i);
-         const partyId = party[0].toNumber();
-         const taskContent = party[1];
-         const taskCompleted = party[2];
-   
-         // Create the html for the task
-         const $newTaskTemplate = $taskTemplate.clone();
-         $newTaskTemplate.find(".content").html(taskContent);
-         $newTaskTemplate
-           .find("input")
-           .prop("name", partyId)
-           .prop("checked", taskCompleted);
-         // .on('click', App.toggleCompleted)
-   
-         // Put the task in the correct list
-         if (taskCompleted) {
-           $("#completedTaskList").append($newTaskTemplate);
-         } else {
-           $("#taskList").append($newTaskTemplate);
-         }
-   
-         // Show the task
-         $newTaskTemplate.show();
+        const voter = await App.ballot.voters(i);
+        console.log(voter);
        }
+   
   },
 
   setLoading: boolean => {

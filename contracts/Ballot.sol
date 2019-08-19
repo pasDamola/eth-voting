@@ -1,30 +1,29 @@
 pragma solidity >=0.4.21 <0.6.0;
 
 contract Ballot {
-    uint public voteCount = 0;
+   uint256 counter;
+   address owner;
 
-     struct Voter {
-        uint id;
-        string name;
-        bool voted;
-  }
-
-    struct Party {
-        uint id;
-        string name;
-    }
-
-  constructor() public {
-        vote("You have successfully voted");
+   constructor() public {
+     counter = 0;
+     owner = msg.sender;
    }
 
+   function getCounter() public view returns(uint256){
+     return counter;
+   }
+   
+   function increment() public {
+     counter++;
+   }
 
-  mapping(uint => Voter) public voters;
-  mapping(uint => Party) public parties;
+   function decrement() public {
+     counter--;
+   }
 
-  function vote(string memory name) public {
-    voteCount ++;
-    parties[voteCount] = Party(voteCount, name);
-    // emit VoterCreated(voteCount, _name, false);
-  }
+   function reset() public {
+     require(msg.sender == owner, "You have no right to do this");
+     counter = 0;
+   }
+
 }

@@ -64,20 +64,19 @@
             <p class="text-center">Loading...</p>
           </div>
           <div id="content">
-                <form onSubmit="App.vote(); return false;">
-                  <input id="candidate" type="text" class="form-control" placeholder="Your Party." required>
-                  <button type="button" class="btn btn-primary">Vote</button>
-                </form> 
-                <ul id="taskList" class="list-unstyled">
-                  <div class="taskTemplate" class="checkbox" style="display: none">
-                    <label>
-                      <input type="checkbox" />
-                      <span class="content">Task content goes here...</span>
-                    </label>
-                  </div>
-                </ul>
-                <ul id="completedTaskList" class="list-unstyled"></ul>
-              </div>
+            <form onSubmit="App.vote(); return false;">
+              <input
+                id="candidate"
+                type="text"
+                class="form-control"
+                placeholder="Your Party."
+                required
+              />
+              <div class="row">&nbsp;</div>
+              <button type="submit" class="btn btn-primary">Vote</button>
+            </form>
+            <div></div>
+          </div>
         </main>
       </div>
     </div>
