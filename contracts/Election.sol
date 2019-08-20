@@ -57,6 +57,7 @@ contract Election{
         emit Vote(candidates[_candidate].name, candidates[_candidate].voteCount);
     }
     
+    // calculates winner with the highest votes
     function winningProposal() public view returns (uint _candidate){
         uint winningVoteCount = 0;
         for (uint p = 0; p < candidates.length; p++) {
