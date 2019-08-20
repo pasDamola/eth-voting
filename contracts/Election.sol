@@ -22,7 +22,7 @@ contract Election{
     mapping(address => Voter) public voters;
     
     modifier ownerOnly(){
-        require(owner == msg.sender, "Only owner of contract is allowed to do this");
+        require(owner == msg.sender, "Only owner is permitted to do this");
         _;
     }
     
@@ -40,7 +40,34 @@ contract Election{
     }
     
     function authorize(address _voter) public ownerOnly{
-        require(voters[_voter].voted, "Voter has already voted");
+        require(!voters[_voter].voted, "Voter already voted");
         voters[_voter].authorized = true;
     }
+    
+    function vote(uint _candidate) public payable {
+        require(!voters[msg.sender].voted, "Voter already voted");
+        require(voters[msg.sender].authorized, "Not authorized to vote");
+        require(_candidate < candidates.length, "Not a valid candidate");
+        
+        voters[msg.sender].vote = _candidate;
+        voters[msg.sender].voted = true;
+        
+        totalVotes += 1;
+        candidates[_candidate].voteCount += 1;
+        emit Vote(candidates[_candidate].name, candidates[_candidate].voteCount);
+    }
+    
+    // function winningProposal() public view returns (uint _candidate){
+    //     uint winningVoteCount = 0;
+    //     for (uint p = 0; p < candidates.length; p++) {
+    //         if (candidates[p].voteCount > winningVoteCount) {
+    //             winningVoteCount = candidates[p].voteCount;
+    //             _candidate = p;
+    //         }
+    //     }
+    // }
+    
+    // function winnerName() public view returns (string memory  _candidate){
+    //     _candidate = candidates[winningProposal()].name;
+    // }
 }
