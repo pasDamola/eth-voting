@@ -6,7 +6,7 @@ App = {
     await App.loadWeb3();
     await App.loadAccount();
     await App.loadContract();
-    await App.render();
+    await App.getCounter();
   },
 
   // https://medium.com/metamask/https-medium-com-metamask-breaking-change-injecting-web3-7722797916a8
@@ -65,54 +65,21 @@ App = {
     console.log(App.ballot);
   },
 
-  vote: async () => {
-    const candidate = $("#candidate").val();
-    await App.ballot.vote(candidate);
-    console.log(candidate);
-    window.location.reload();
+  getCounter: () => {
+    App.ballot.getCounter().then(function(result) {
+      $("#getCounter").html(result);
+    });
   },
 
+  increment: async () => {
+    let value = await App.ballot.increment();
+    $("#getCounter").html(value);
 
-  render: async () => {
-    // Prevent double render
-    if (App.loading) {
-      return;
-    }
-
-    // Update app loading state
-    App.setLoading(true);
-
-    // Render Account
-    $("#account").html(App.votersAccount);
-
-    // Render Tasks
-    await App.renderVotes();
-
-    // Update loading state
-    App.setLoading(false);
   },
 
-  renderVotes: async () => {
-       // Load the total task count from the blockchain
-       const voteCount = await App.ballot.voteCount();
-       for (var i = 1; i <= voteCount; i++) {
-        const voter = await App.ballot.voters(i);
-        console.log(voter);
-       }
-   
-  },
-
-  setLoading: boolean => {
-    App.loading = boolean;
-    const loader = $("#loader");
-    const content = $("#content");
-    if (boolean) {
-      loader.show();
-      content.hide();
-    } else {
-      loader.hide();
-      content.show();
-    }
+  reset: async () => {
+    let value = await App.ballot.reset();
+    $("#getCounter").html(value);
   }
 };
 

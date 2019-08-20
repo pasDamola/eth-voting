@@ -1,7 +1,7 @@
-const Ballot = artifacts.require("./Ballot.sol");
+const Election = artifacts.require("./Election.sol");
 
-console.log(Ballot);
+console.log(Election);
 
 module.exports = function(deployer) {
-  deployer.deploy(Ballot);
+  deployer.deploy(Election);
 };
