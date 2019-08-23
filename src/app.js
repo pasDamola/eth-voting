@@ -6,6 +6,7 @@ App = {
     await App.loadWeb3();
     await App.loadAccount();
     await App.loadContract();
+    await App.loadUI();
   },
 
   // https://medium.com/metamask/https-medium-com-metamask-breaking-change-injecting-web3-7722797916a8
@@ -63,6 +64,15 @@ App = {
     App.election = await App.contracts.election.deployed();
     console.log(App.election);
   },
+
+  loadUI : async () => {
+    App.election = await App.contracts.election.deployed();
+    var name = await App.election.nameoFElection.call();
+    console.log(name);
+    $('#election-name').innerHTML = name;
+    var candidate1 = await App.election.candidates.call();
+    // console.log(candidate1);
+  }
 };
 
 $(() => {
