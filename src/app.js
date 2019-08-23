@@ -6,7 +6,6 @@ App = {
     await App.loadWeb3();
     await App.loadAccount();
     await App.loadContract();
-    await App.getCounter();
   },
 
   // https://medium.com/metamask/https-medium-com-metamask-breaking-change-injecting-web3-7722797916a8
@@ -56,31 +55,14 @@ App = {
 
   loadContract: async () => {
     // Create a JavaScript version of the smart contract
-    const ballot = await $.getJSON("Ballot.json");
-    App.contracts.ballot = TruffleContract(ballot);
-    App.contracts.ballot.setProvider(App.web3Provider);
+    const election = await $.getJSON("Election.json");
+    App.contracts.election = TruffleContract(election);
+    App.contracts.election.setProvider(App.web3Provider);
 
     // Hydrate the smart contract with values from the blockchain
-    App.ballot = await App.contracts.ballot.deployed();
-    console.log(App.ballot);
+    App.election = await App.contracts.election.deployed();
+    console.log(App.election);
   },
-
-  getCounter: () => {
-    App.ballot.getCounter().then(function(result) {
-      $("#getCounter").html(result);
-    });
-  },
-
-  increment: async () => {
-    let value = await App.ballot.increment();
-    $("#getCounter").html(value);
-
-  },
-
-  reset: async () => {
-    let value = await App.ballot.reset();
-    $("#getCounter").html(value);
-  }
 };
 
 $(() => {

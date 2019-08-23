@@ -6379,12 +6379,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x80A4353d95F1a458460AbF276A4de0980F85f0D9",
-      "transactionHash": "0x154cf37d950d1fc7f44df429855f70b538cbb484ed0b05bf970a703b931c0b56"
+      "address": "0x17E795F22F1d514Fb1B8fdB02650c08219F69846",
+      "transactionHash": "0xcdb65a3d51baa2d3dadae10e2d8fd56a066e290275fa4148397363955d2ddc76"
     }
   },
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-08-23T11:33:25.194Z",
+  "updatedAt": "2019-08-23T15:21:17.517Z",
   "devdoc": {
     "methods": {}
   },
