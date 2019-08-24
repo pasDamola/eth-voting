@@ -26,9 +26,11 @@ contract Election{
         _;
     }
     
-    constructor(string memory _name) public {
+    constructor(string memory _name, string memory candidate1, string memory candidate2) public {
         owner = msg.sender;
         nameoFElection = _name;
+        candidates.push(Candidate(candidate1, 0));
+        candidates.push(Candidate(candidate2, 0));
     }
     // return the number of candidates up for election
     function getNumCandidates() public view returns(uint){

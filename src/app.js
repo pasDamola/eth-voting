@@ -99,7 +99,9 @@ App = {
   },
 
   submitVote : function(){
-    
+    App.contracts.election.deployed().then(function(instance){
+      return instance.vote(voteIndex, {from : web3.eth.accounts[0]})
+    })
   }
 };
 
