@@ -64,7 +64,7 @@ App = {
     App.election = await App.contracts.election.deployed();
   },
 
-  loadUI: () => {
+  loadUI: function() {
     var electionInstance;
     App.contracts.election
       .deployed()
@@ -88,7 +88,18 @@ App = {
       .catch(function(err) {
         console.log(err.message);
       });
-    //return App.bindEvents();
+    return App.bindEvents();
+  },
+
+  bindEvents : function() {
+    $('.vote').on('click', function(){
+      var voteIndex = $(this).attr("data-index");
+      App.submitVote(voteIndex);
+    })
+  },
+
+  submitVote : function(){
+    
   }
 };
 
