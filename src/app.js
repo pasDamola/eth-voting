@@ -6,7 +6,7 @@ App = {
     await App.loadWeb3();
     await App.loadAccount();
     await App.loadContract();
-    await App.loadUI();
+    App.loadUI();
   },
 
   // https://medium.com/metamask/https-medium-com-metamask-breaking-change-injecting-web3-7722797916a8
@@ -62,16 +62,33 @@ App = {
 
     // Hydrate the smart contract with values from the blockchain
     App.election = await App.contracts.election.deployed();
-    console.log(App.election);
   },
 
-  loadUI : async () => {
-    App.election = await App.contracts.election.deployed();
-    var name = await App.election.nameoFElection.call();
-    console.log(name);
-    $('#election-name').innerHTML = name;
-    var candidate1 = await App.election.candidates.call();
-    // console.log(candidate1);
+  loadUI: () => {
+    var electionInstance;
+    App.contracts.election
+      .deployed()
+      .then(function(instance) {
+        electionInstance = instance;
+        return electionInstance.nameoFElection.call();
+      })
+      .then(function(name) {
+        $("#election-name")[0].innerHTML = name;
+        return electionInstance.candidates.call(0);
+      })
+      .then(function(candidate1) {
+        $("#results #candidate-name").children()[0].innerHTML = candidate1[0];
+        $("#results #vote-count").children()[0].innerHTML = candidate1[1];
+        return electionInstance.candidates.call(1);
+      })
+      .then(function(candidate2) {
+        $("#results #candidate-name").children()[1].innerHTML = candidate2[0];
+        $("#results #vote-count").children()[1].innerHTML = candidate2[1];
+      })
+      .catch(function(err) {
+        console.log(err.message);
+      });
+    //return App.bindEvents();
   }
 };
 
