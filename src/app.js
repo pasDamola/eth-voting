@@ -102,6 +102,12 @@ App = {
     App.contracts.election.deployed().then(function(instance){
       return instance.vote(voteIndex, {from : web3.eth.accounts[0]})
     })
+  },
+
+  authorizeVoter : async function(){
+   let addresss =  $("#address").val();
+   let authorize = await App.election.authorize(addresss);
+   console.log(authorize);
   }
 };
 
