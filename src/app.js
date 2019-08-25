@@ -108,6 +108,12 @@ App = {
    let addresss =  $("#address").val();
    let authorize = await App.election.authorize(addresss);
    console.log(authorize);
+  },
+   
+  addCandidate : async function(){
+    let name = $("#candidate").val();
+    let candidate = await App.election.addCandidates(name);
+    console.log(candidate);
   }
 };
 
