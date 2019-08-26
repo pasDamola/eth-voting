@@ -21,7 +21,12 @@ contract TestElection {
 
   function testNonOwnersCannotAuthorizeVoters() public {
     ThrowProxy proxy = new ThrowProxy(address(instance));
+
     Election(address(proxy)).authorize(this);
+
+    bool result = proxy.execute();
+
+    Assert.isFalse(result, "proxy should throw exception when calling authorize()")
   }
 }
 
