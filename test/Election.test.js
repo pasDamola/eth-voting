@@ -14,4 +14,10 @@ contract("Election", accounts => {
     assert.equal(this.candidate1[0], "Atiku", "it should be atiku");
     assert.equal(this.candidate2[0], "Buhari", "it must be buhari");
   });
+
+  it("non owners cannot authorize voters", async() => {
+    this.election = await Election.deployed();
+    this.authorized  = await this.election.authorize(accounts[1], {from : accounts[0]});
+    console.log(this.authorized.from);
+  })
 });
