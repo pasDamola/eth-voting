@@ -5,7 +5,7 @@ import "truffle/DeployedAddresses.sol";
 import "../contracts/Election.sol";
 
 contract TestElection {
-  Election instance = Election(DeloyedAddresses.Election());
+  Election instance = Election(DeployedAddresses.Election());
 
   function testNonAuthorizedVoteDoesNotCount() public {
     uint preVoteCount;
@@ -15,7 +15,7 @@ contract TestElection {
     instance.vote(0);
 
     var(, postVoteCount) = instance.candidates(0);
-    Assert.equal(preVoteCount, postVoteCount, "preVoteCount should be the same as postVoteCount")
+    Assert.equal(preVoteCount, postVoteCount, "preVoteCount should be the same as postVoteCount");
 
   }
 
@@ -26,7 +26,7 @@ contract TestElection {
 
     bool result = proxy.execute();
 
-    Assert.isFalse(result, "proxy should throw exception when calling authorize()")
+    Assert.isFalse(result, "proxy should throw exception when calling authorize()");
   }
 }
 
@@ -35,15 +35,15 @@ contract ThrowProxy {
   address public target;
   bytes data;
 
-  function ThrowProxy(address _target){
+  function ThrowProxy(address _target) public {
     target = _target;
   }
 
-  function(){
+  function() private {
     data = msg.data;
   }
 
-  function execute() returns (bool){
+  function execute() public returns (bool){
     return target.call(data);
   }
 }
