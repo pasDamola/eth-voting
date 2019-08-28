@@ -9,12 +9,13 @@ contract TestElection {
 
   function testNonAuthorizedVoteDoesNotCount() public {
     uint preVoteCount;
-
+    uint postVoteCount;
+    
     (, preVoteCount) = instance.candidates(0);
 
     instance.vote(0);
 
-    var(, postVoteCount) = instance.candidates(0);
+    (, postVoteCount) = instance.candidates(0);
     Assert.equal(preVoteCount, postVoteCount, "preVoteCount should be the same as postVoteCount");
 
   }
@@ -35,11 +36,11 @@ contract ThrowProxy {
   address public target;
   bytes data;
 
-  function ThrowProxy(address _target) public {
+  constructor(address _target) public {
     target = _target;
   }
 
-  function() private {
+  function() external {
     data = msg.data;
   }
 
